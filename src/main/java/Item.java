@@ -1,6 +1,3 @@
-package com.github.perscholas;
-
-
 public class Item{
     
     //Attributes

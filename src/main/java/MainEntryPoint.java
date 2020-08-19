@@ -1,6 +1,3 @@
-package com.github.perscholas;
-
-
 import java.io.IOException;
 import java.util.Scanner;
 

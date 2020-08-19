@@ -1,12 +1,5 @@
-package com.github.perscholas;
-
-
 import java.io.*;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public abstract class TheSystem {
@@ -15,7 +8,7 @@ public abstract class TheSystem {
     private final static int NAME = 0;
     private final static int DESCRIPTION = 1;
     private final static int PRICE = 2;
-    private final static int QUANTITY = 3;
+    private final static int AVAILABLE_QUANTITY = 3;
     
     
     //Start Constructors
@@ -26,13 +19,15 @@ public abstract class TheSystem {
         if (!"AppSystem".equals(getClass().getSimpleName())) {
             return;
         }
-        File file = new File(getClass().getClassLoader().getResource("sample.txt").toString());
+        File file = new File(getClass().getClassLoader().getResource("sample.txt").getFile());
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             List<String> sampleLines = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 sampleLines.add(line);
+                System.out.println(line);
             }
+            
             itemCollection
                     .putAll(sampleLines.stream().map(sampleLine -> sampleLine.split("  "))
                             .collect(Collectors.toMap(splitLine -> {
@@ -42,7 +37,7 @@ public abstract class TheSystem {
                                 item.setItemName(splitLine[NAME]);
                                 item.setItemDesc(splitLine[DESCRIPTION]);
                                 item.setItemPrice(Double.valueOf(splitLine[PRICE]));
-                                item.setQuantity(Integer.valueOf(splitLine[QUANTITY]));
+                                item.setAvailableQuantity(Integer.valueOf(splitLine[AVAILABLE_QUANTITY]));
                                 return item;
                             })));
         } catch (FileNotFoundException e) {
@@ -70,7 +65,7 @@ public abstract class TheSystem {
         Item savedItem = itemCollection.get(item.getItemName());
         if (savedItem != null) {
             if (checkAvailability(item)) {
-                savedItem.setAvailableQuantity(savedItem.getAvailableQuantity() + 1);
+                savedItem.setQuantity(savedItem.getQuantity() + 1);
                 return true;
             }
             return false;

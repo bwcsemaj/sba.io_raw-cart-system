@@ -1,6 +1,3 @@
-package com.github.perscholas;
-
-
 public class AppSystem extends TheSystem {
     AppSystem() {
     }
@@ -22,7 +19,7 @@ public class AppSystem extends TheSystem {
             displayBuilder
                     .append(String.format("%-" + 20 + "s", item.getItemName()))
                     .append(String.format("%-" + 20 + "s", item.getItemDesc()))
-                    .append(String.format("%-" + 20 + "d", item.getItemPrice()))
+                    .append(String.format("%-" + 20 + ".2f", item.getItemPrice()))
                     .append(String.format("%-" + 20 + "d", item.getAvailableQuantity()))
                     .append("\n");
         });

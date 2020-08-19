@@ -1,11 +1,6 @@
-package com.github.perscholas;
-
-
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 public class CartSystem extends TheSystem {
     CartSystem() {
+        super();
     }
     
     @Override
@@ -28,25 +23,26 @@ public class CartSystem extends TheSystem {
             displayBuilder
                     .append(String.format("%-" + 20 + "s", item.getItemName()))
                     .append(String.format("%-" + 20 + "s", item.getItemDesc()))
-                    .append(String.format("%-" + 20 + "d", item.getItemPrice()))
+                    .append(String.format("%-" + 20 + ".2f", item.getItemPrice()))
                     .append(String.format("%-" + 20 + "d", item.getQuantity()))
-                    .append(String.format("%-" + 20 + "d", itemSubTotal))
+                    .append(String.format("%-" + 20 + ".2f", itemSubTotal))
                     .append("\n");
             return itemSubTotal;
-        }).reduce(Double::sum).get();
+        }).reduce(Double::sum).orElse(0d);
+        displayBuilder.append("\n");
         
         //Total content
         displayBuilder
                 .append(String.format("%-" + 20 + "s", "Pre-tax Total"))
-                .append(String.format("%-" + 20 + "f", subTotal))
+                .append(String.format("%-" + 20 + ".2f", subTotal))
                 .append("\n");
         displayBuilder
                 .append(String.format("%-" + 20 + "s", "Tax"))
-                .append(String.format("%-" + 20 + "d", subTotal * 0.05))
+                .append(String.format("%-" + 20 + ".2f", subTotal * 0.05))
                 .append("\n");
         displayBuilder
                 .append(String.format("%-" + 20 + "s", "Total"))
-                .append(String.format("%-" + 20 + "d", subTotal * 1.05))
+                .append(String.format("%-" + 20 + ".2f", subTotal * 1.05))
                 .append("\n");
         
         System.out.println(displayBuilder.toString());
